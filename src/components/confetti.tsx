@@ -56,6 +56,45 @@ export default function Confetti() {
           spread: 55,
           origin: { x: 1 },
         });
+        confettiModule({
+          particleCount: 2,
+          angle: 120, // Down-left direction
+          spread: 55,
+          origin: { x: 1, y: 0 }, // Top-right corner
+        });
+        confettiModule({
+          particleCount: 2,
+          angle: 60, // Down-right direction
+          spread: 55,
+          origin: { x: 0, y: 0 }, // Top-left corner
+        });
+        confettiModule({
+          particleCount: 2,
+          angle: 0, // Shoots downward
+          spread: 55,
+          origin: { x: 0.5, y: 0 }, // Top-center
+        });
+
+        confettiModule({
+          particleCount: 2,
+          angle: 180, // Shoots upward
+          spread: 55,
+          origin: { x: 0.5, y: 1 }, // Bottom-center
+        });
+
+        confettiModule({
+          particleCount: 2,
+          angle: 90, // Shoots to the right
+          spread: 55,
+          origin: { x: 0, y: 0.5 }, // Left-center
+        });
+
+        confettiModule({
+          particleCount: 2,
+          angle: 270, // Shoots to the left
+          spread: 55,
+          origin: { x: 1, y: 0.5 }, // Right-center
+        });
       }, 500);
 
       return () => {
@@ -67,7 +106,7 @@ export default function Confetti() {
     // Stop confetti after 15 seconds to save resources
     const timer = setTimeout(() => {
       setIsActive(false);
-    }, 15000);
+    }, 30000);
 
     return () => clearTimeout(timer);
   }, [isActive]);
