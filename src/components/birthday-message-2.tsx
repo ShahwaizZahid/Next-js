@@ -67,7 +67,7 @@ export default function BirthdayMessage2({ username }: { username: string }) {
               style={{ transform: "translateZ(60px)" }}
             >
               <Image
-                src="/cake-1.jpeg" // Ensure the image is in the public folder
+                src="/caku/12.jpeg" // Ensure the image is in the public folder
                 alt="Birthday celebration"
                 fill
                 className="object-cover"
@@ -120,8 +120,11 @@ export default function BirthdayMessage2({ username }: { username: string }) {
                 Your Special Day!
               </h2>
               <p className="mb-6 text-lg text-white">
-                Wishing you a day filled with happiness and a year filled with
-                joy. May all your dreams come true!
+                <b>🎂 Happy Birthday Cake! 🎂</b>
+                <br />
+                🎉🎂 Grateful for your amazing friendship and all the memories
+                we’ve made.🎉🎂 Here’s to more joy, growth, and unforgettable
+                moments ahead. Have an awesome day — you truly deserve it! 💯✨
               </p>
               <div className="flex justify-center space-x-4">
                 <div

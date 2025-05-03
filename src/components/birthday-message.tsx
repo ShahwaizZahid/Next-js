@@ -120,8 +120,13 @@ export default function BirthdayMessage({ username }: { username: string }) {
                 Your Special Day!
               </h2>
               <p className="mb-6 text-lg text-white">
-                Wishing you a day filled with happiness and a year filled with
-                joy. May all your dreams come true!
+                <b>
+                  Happy birthday! <br />
+                </b>
+                🥳 🥳 Cheers 🥂 to your success and a bright future!” I cant
+                think of a better gift than your friendship. Keep shining..✨✨
+                And I Pray <br />
+                <b>🙏You always Stay Single🤷‍♂️..Foreveeeer!</b>
               </p>
               <div className="flex justify-center space-x-4">
                 <div

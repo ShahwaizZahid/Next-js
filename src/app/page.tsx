@@ -5,6 +5,8 @@ import BirthdayBox from "@/components/birthday-box";
 import BirthdayMessage from "@/components/birthday-message";
 import ConfettiEffect from "@/components/confetti-effect";
 import FloatingElements from "@/components/floating-elements";
+import Link from "next/link";
+import { Camera } from "lucide-react";
 
 export default function BirthdayPage() {
   const [isBoxOpened, setIsBoxOpened] = useState(false);
@@ -12,6 +14,16 @@ export default function BirthdayPage() {
   return (
     <main className="relative flex h-screen w-full items-center justify-center overflow-hidden bg-gradient-to-br from-purple-800 via-purple-600 to-pink-500">
       {/* 3D perspective wrapper */}
+      {/* Gallery button - only visible after box is opened */}
+      {isBoxOpened && (
+        <Link
+          href="/gallery"
+          className="absolute  top-10 z-30 flex items-center gap-2 rounded-full bg-white/20 px-4 py-2 text-white backdrop-blur-md transition-all hover:scale-105 hover:bg-white/30"
+        >
+          <Camera size={20} />
+          <span>View Gallery</span>
+        </Link>
+      )}
       <div className="relative h-full w-full" style={{ perspective: "1000px" }}>
         {/* Animated background with parallax effect */}
         <div className="absolute inset-0 z-0">
