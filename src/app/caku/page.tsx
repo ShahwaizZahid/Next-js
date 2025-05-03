@@ -8,8 +8,7 @@ import BirthdayMessage2 from "@/components/birthday-message-2";
 
 export default function BirthdayPage() {
   const [isBoxOpened, setIsBoxOpened] = useState(false);
-  const [username] = useState("caku"); // You can make this dynamic
-  // You can replace this with your own image URL
+  const [username] = useState(" Abdullah Caku");
   return (
     <main className="relative flex h-screen w-full items-center justify-center overflow-hidden bg-gradient-to-br from-purple-800 via-purple-600 to-pink-500">
       {/* 3D perspective wrapper */}
