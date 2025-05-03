@@ -1,13 +1,17 @@
 "use client";
 
+import type React from "react";
+
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, Heart } from "lucide-react";
+import { ArrowLeft, ImageIcon, Film } from "lucide-react";
 
 export default function GalleryPage() {
-  const [visibleImages, setVisibleImages] = useState<number[]>([]);
+  const [visibleItems, setVisibleItems] = useState<number[]>([]);
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
+  const [selectedVideo, setSelectedVideo] = useState<number | null>(null);
+  const [activeTab, setActiveTab] = useState<"images" | "videos">("images");
 
   const images = [
     {
@@ -132,96 +136,278 @@ export default function GalleryPage() {
     },
   ];
 
+  const videos = [
+    {
+      id: 0,
+      thumbnail: "/caku1/1.jpeg",
+      src: "/caku1/1.mp4",
+      alt: "Birthday Video 1",
+      filename: "birthday-video-1.mp4",
+      duration: "1:23",
+    },
+    {
+      id: 1,
+      thumbnail: "/caku1/2.png",
+      src: "/caku1/2.mp4",
+      alt: "Birthday Video 2",
+      filename: "birthday-video-2.mp4",
+      duration: "2:05",
+    },
+    {
+      id: 2,
+      thumbnail: "/caku1/3.png",
+      src: "/caku1/3.mp4",
+      alt: "Birthday Video 3",
+      filename: "birthday-video-3.mp4",
+      duration: "1:58",
+    },
+    {
+      id: 3,
+      thumbnail: "/caku1/4.png",
+      src: "/caku1/4.mp4",
+      alt: "Birthday Video 4",
+      filename: "birthday-video-4.mp4",
+      duration: "2:17",
+    },
+    {
+      id: 4,
+      thumbnail: "/caku1/5.png",
+      src: "/caku1/5.mp4",
+      alt: "Birthday Video 5",
+      filename: "birthday-video-5.mp4",
+      duration: "1:44",
+    },
+    {
+      id: 5,
+      thumbnail: "/caku1/6.png",
+      src: "/caku1/6.mp4",
+      alt: "Birthday Video 611",
+      filename: "birthday-video-6.mp4",
+      duration: "2:09",
+    },
+    {
+      id: 6,
+      thumbnail: "/caku1/7.png",
+      src: "/caku1/7.mp4",
+      alt: "Birthday Video 7",
+      filename: "birthday-video-7.mp4",
+      duration: "1:36",
+    },
+    {
+      id: 7,
+      thumbnail: "/caku1/8.png",
+      src: "/caku1/8.mp4",
+      alt: "Birthday Video 8",
+      filename: "birthday-video-8.mp4",
+      duration: "2:01",
+    },
+    {
+      id: 8,
+      thumbnail: "/caku1/9.png",
+      src: "/caku1/9.mp4",
+      alt: "Birthday Video 9",
+      filename: "birthday-video-8.mp4",
+      duration: "2:01",
+    },
+    {
+      id: 9,
+      thumbnail: "/caku1/10.png",
+      src: "/caku1/10.mp4",
+      alt: "Birthday Video 10",
+      filename: "birthday-video-8.mp4",
+      duration: "2:01",
+    },
+    {
+      id: 10,
+      thumbnail: "/caku1/11.png",
+      src: "/caku1/11.mp4",
+      alt: "Birthday Video 11",
+      filename: "birthday-video-8.mp4",
+      duration: "2:01",
+    },
+    {
+      id: 11,
+      thumbnail: "/caku1/12.png",
+      src: "/caku1/12.mp4",
+      alt: "Birthday Video 12",
+      filename: "birthday-video-8.mp4",
+      duration: "2:01",
+    },
+    {
+      id: 12,
+      thumbnail: "/caku1/13.png",
+      src: "/caku1/13.mp4",
+      alt: "Birthday Video 13",
+      filename: "birthday-video-8.mp4",
+      duration: "2:01",
+    },
+  ];
+
   useEffect(() => {
-    // Staggered animation for images appearing
+    // Reset visible items when changing tabs
+    setVisibleItems([]);
+
+    // Staggered animation for items appearing
     const timer = setTimeout(() => {
       const interval = setInterval(() => {
-        setVisibleImages((prev) => {
+        setVisibleItems((prev) => {
           const nextIndex = prev.length;
-          if (nextIndex >= images.length) {
+          const maxItems =
+            activeTab === "images" ? images.length : videos.length;
+
+          if (nextIndex >= maxItems) {
             clearInterval(interval);
             return prev;
           }
           return [...prev, nextIndex];
         });
-      }, 100); // 100ms between each image appearing
+      }, 100); // 100ms between each item appearing
 
       return () => clearInterval(interval);
     }, 300); // Initial delay
 
     return () => clearTimeout(timer);
-  }, [images.length]);
+  }, [activeTab, images.length, videos.length]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-800 via-purple-600 to-pink-500 p-4 md:p-8">
       {/* Header with back button */}
       <header className="mb-8 flex items-center justify-between">
         <Link
-          href="/caku"
+          href="/"
           className="flex items-center gap-2 rounded-full bg-white/20 px-4 py-2 text-white backdrop-blur-md transition-all hover:bg-white/30"
         >
           <ArrowLeft size={20} />
           <span>Back</span>
         </Link>
         <h1 className="text-center text-3xl font-bold text-white drop-shadow-lg md:text-4xl">
-          🥳 🥳 🥳 🥳 Happy Birthday 🥳 🥳 🥳 🥳
+          🥳 🥳 🥳 🥳 Memories 🥳 🥳 🥳 🥳
         </h1>
         <div className="w-[100px]"></div> {/* Spacer for centering */}
       </header>
 
-      {/* Gallery grid */}
-      <div className="mx-auto max-w-7xl">
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
-          {images.map((image, index) => (
-            <div
-              key={image.id}
-              className={`group relative aspect-square cursor-pointer overflow-hidden rounded-lg transition-all duration-500 ${
-                visibleImages.includes(index)
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-10"
-              }`}
-              style={{
-                transitionDelay: `${index * 50}ms`,
-                transform: `perspective(1000px) rotateY(${Math.random() * 5 - 2.5}deg) rotateX(${Math.random() * 5 - 2.5}deg)`,
-              }}
-              onClick={() => setSelectedImage(image.id)}
-            >
-              {/* Image */}
-              <div className="relative h-full w-full overflow-hidden rounded-lg border-2 border-white/30 shadow-xl transition-all duration-500 group-hover:scale-105">
-                <Image
-                  src={image.src || "/placeholder.svg"}
-                  alt={image.alt}
-                  fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-110"
-                />
-
-                {/* Overlay with info */}
-                <div className="absolute inset-0 flex flex-col items-center justify-end bg-gradient-to-t from-black/70 to-transparent p-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                  <p className="text-center text-sm font-medium text-white">
-                    Memory #{image.id + 1}
-                  </p>
-                </div>
-
-                {/* Like button */}
-                <button
-                  className="absolute right-2 top-2 rounded-full bg-white/20 p-2 opacity-0 backdrop-blur-md transition-opacity duration-300 hover:bg-white/40 group-hover:opacity-100"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    // Toggle like functionality would go here
-                  }}
-                >
-                  <Heart size={16} className="text-white" />
-                </button>
-              </div>
-
-              {/* 3D effect shadow */}
-              <div className="absolute -bottom-1 left-1/2 h-2 w-[90%] -translate-x-1/2 rounded-full bg-black opacity-30 blur-md transition-all duration-500 group-hover:opacity-50"></div>
-            </div>
-          ))}
-        </div>
+      {/* Gallery tabs */}
+      <div className="mx-auto mb-8 flex max-w-md justify-center gap-4 rounded-full bg-white/10 p-1 backdrop-blur-md">
+        <button
+          className={`flex items-center gap-2 rounded-full px-6 py-2 transition-all ${
+            activeTab === "images"
+              ? "bg-white text-purple-700"
+              : "text-white hover:bg-white/10"
+          }`}
+          onClick={() => setActiveTab("images")}
+        >
+          <ImageIcon size={18} />
+          <span>Photos</span>
+        </button>
+        <button
+          className={`flex items-center gap-2 rounded-full px-6 py-2 transition-all ${
+            activeTab === "videos"
+              ? "bg-white text-purple-700"
+              : "text-white hover:bg-white/10"
+          }`}
+          onClick={() => setActiveTab("videos")}
+        >
+          <Film size={18} />
+          <span>Videos</span>
+        </button>
       </div>
 
-      {/* Lightbox for selected image */}
+      {/* Gallery grid */}
+      <div className="mx-auto max-w-7xl">
+        {activeTab === "images" && (
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+            {images.map((image, index) => (
+              <div
+                key={image.id}
+                className={`group relative aspect-square cursor-pointer overflow-hidden rounded-lg transition-all duration-500 ${
+                  visibleItems.includes(index)
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-0 translate-y-10"
+                }`}
+                style={{
+                  transitionDelay: `${index * 50}ms`,
+                  transform: `perspective(1000px) rotateY(${Math.random() * 5 - 2.5}deg) rotateX(${Math.random() * 5 - 2.5}deg)`,
+                }}
+                onClick={() => setSelectedImage(image.id)}
+              >
+                {/* Image */}
+                <div className="relative h-full w-full overflow-hidden rounded-lg border-2 border-white/30 shadow-xl transition-all duration-500 group-hover:scale-105">
+                  <Image
+                    src={image.src || "/placeholder.svg"}
+                    alt={image.alt}
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+
+                  {/* Overlay with info */}
+                  <div className="absolute inset-0 flex flex-col items-center justify-end bg-gradient-to-t from-black/70 to-transparent p-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                    <p className="text-center text-sm font-medium text-white">
+                      Memory #{image.id + 1}
+                    </p>
+                  </div>
+                </div>
+
+                {/* 3D effect shadow */}
+                <div className="absolute -bottom-1 left-1/2 h-2 w-[90%] -translate-x-1/2 rounded-full bg-black opacity-30 blur-md transition-all duration-500 group-hover:opacity-50"></div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {activeTab === "videos" && (
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            {videos.map((video, index) => (
+              <div
+                key={video.id}
+                className={`group relative aspect-video cursor-pointer overflow-hidden rounded-lg transition-all duration-500 ${
+                  visibleItems.includes(index)
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-0 translate-y-10"
+                }`}
+                style={{
+                  transitionDelay: `${index * 50}ms`,
+                  transform: `perspective(1000px) rotateY(${Math.random() * 5 - 2.5}deg) rotateX(${Math.random() * 5 - 2.5}deg)`,
+                }}
+                onClick={() => setSelectedVideo(video.id)}
+              >
+                {/* Video thumbnail */}
+                <div className="relative h-full w-full overflow-hidden rounded-lg border-2 border-white/30 shadow-xl transition-all duration-500 group-hover:scale-105">
+                  <Image
+                    src={video.thumbnail || "/placeholder.svg"}
+                    alt={video.alt}
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+
+                  {/* Play button overlay */}
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white/30 backdrop-blur-md transition-transform duration-300 group-hover:scale-110">
+                      <div className="ml-1 h-0 w-0 border-y-8 border-y-transparent border-l-12 border-l-white"></div>
+                    </div>
+                  </div>
+
+                  {/* Video duration */}
+                  <div className="absolute bottom-2 right-2 rounded bg-black/70 px-2 py-1 text-xs text-white">
+                    {video.duration}
+                  </div>
+
+                  {/* Overlay with info */}
+                  <div className="absolute inset-0 flex flex-col items-center justify-end bg-gradient-to-t from-black/70 to-transparent p-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                    <p className="text-center text-sm font-medium text-white">
+                      Video #{video.id + 1}
+                    </p>
+                  </div>
+                </div>
+
+                {/* 3D effect shadow */}
+                <div className="absolute -bottom-1 left-1/2 h-2 w-[90%] -translate-x-1/2 rounded-full bg-black opacity-30 blur-md transition-all duration-500 group-hover:opacity-50"></div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Image Lightbox */}
       {selectedImage !== null && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4"
@@ -239,9 +425,57 @@ export default function GalleryPage() {
                 className="object-contain"
               />
             </div>
+
+            {/* Close button */}
             <button
               className="absolute right-4 top-4 rounded-full bg-black/50 p-2 text-white hover:bg-black/70"
               onClick={() => setSelectedImage(null)}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Video Lightbox */}
+      {selectedVideo !== null && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4"
+          onClick={() => setSelectedVideo(null)}
+        >
+          <div
+            className="relative max-h-[90vh] max-w-[90vw] overflow-hidden rounded-lg bg-black shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="relative aspect-video w-[80vw] max-w-4xl">
+              <video
+                src={videos[selectedVideo].src}
+                controls
+                autoPlay
+                className="h-full w-full"
+                poster={videos[selectedVideo].thumbnail}
+              >
+                Your browser does not support the video tag.
+              </video>
+            </div>
+
+            {/* Close button */}
+            <button
+              className="absolute right-4 top-4 rounded-full bg-white/20 p-2 text-white hover:bg-white/40"
+              onClick={() => setSelectedVideo(null)}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"

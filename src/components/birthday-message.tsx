@@ -67,7 +67,7 @@ export default function BirthdayMessage({ username }: { username: string }) {
               style={{ transform: "translateZ(60px)" }}
             >
               <Image
-                src="/both.jpeg" // Ensure the image is in the public folder
+                src="/anda/1.jpeg" // Ensure the image is in the public folder
                 alt="Birthday celebration"
                 fill
                 className="object-cover"
