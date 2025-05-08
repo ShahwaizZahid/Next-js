@@ -147,7 +147,7 @@ export default function GalleryPage() {
     },
     {
       id: 1,
-      thumbnail: "/caku1/2.png",
+      thumbnail: "/caku1/2.jpeg",
       src: "/caku1/2.mp4",
       alt: "Birthday Video 2",
       filename: "birthday-video-2.mp4",
